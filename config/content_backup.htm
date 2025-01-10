@@ -206,7 +206,8 @@ function openByGet(){
 }
 
 openByGet();
-</script><h3>w10</h3>
+</script>
+<h3>w10</h3>
 <p><a href="/downloads/101.zip">零件一SLVS</a></p>
 <p><a href="https://mdecad2024.github.io/hw-41223230/cmsimde/static/viewstl.html?src=https://s104.cycu.org/~41223230/w101.stl">零件一 STL</a></p>
 <p><a href="https://mdecad2024.github.io/hw-41223230/cmsimde/static/viewstl.html?src=https://s104.cycu.org/~41223230/w101.stl"></a><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/6yIDu8v52Ps" width="560"></iframe></p>
@@ -289,7 +290,8 @@ function openByGet(){
 }
 
 openByGet();
-</script><h3>w11_hw</h3>
+</script>
+<h3>w11_hw</h3>
 <p>SLVS檔：<a href="/downloads/fipper shaft.7z">fipper shaft.slvs</a></p>
 <p>STL檔：<a href="https://mdecad2024.github.io/hw-41223230/cmsimde/static/viewstl.html?src=https://s104.cycu.org/~41223230/fippershaft.stl">fipper shaft.stl</a></p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/6QvBRKVgsMc" width="560"></iframe></p>
@@ -382,7 +384,8 @@ function openByGet(){
 }
 
 openByGet();
-</script><h3>w14</h3>
+</script>
+<h3>w14</h3>
 <p>組立：<a href="/downloads/solvespace w16.7z">Flipper_assemble</a></p>
 <p>STL檔：<a href="https://mdecad2024.github.io/hw-41223230/cmsimde/static/viewstl.html?src=https://s104.cycu.org/~41223230/assembly.stl">assembly.stl</a></p>
 <p>solvespace 進行<span>組立的過程</span></p>
@@ -464,7 +467,8 @@ function openByGet(){
 }
 
 openByGet();
-</script><h1>HW2</h1>
+</script>
+<h1>HW2</h1>
 <p>Homework 2 (10%):</p>
 <p style="padding-left: 30px;">利用 Solvespace 與 NX 建立 <a href="https://mde.tw/cad2024/content/BonW.html">Balance on Wheels</a> 組立件</p>
 <hr/>
@@ -575,7 +579,8 @@ function openByGet(){
 }
 
 openByGet();
-</script><h1>HW3</h1>
+</script>
+<h1>HW3</h1>
 <p>Homework 3 (20%):</p>
 <p style="padding-left: 30px;">建立 <a href="https://mde.tw/cad2024/content/BonW.html">Balance on Wheels</a> 控制系統設計模擬場景</p>
 <p style="padding-left: 30px;"><a href="https://github.com/mdecycu/Balance_On_Wheels">https://github.com/mdecycu/Balance_On_Wheels</a></p>
@@ -609,7 +614,85 @@ openByGet();
 <p></p>
 <p>nx組立</p>
 <p>NX：<a href="/downloads/assemble nx.7z">assemble nx.7z</a></p>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/mZRRPVk6gvY" width="560"></iframe></p><h1>HW4</h1>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/mZRRPVk6gvY" width="560"></iframe></p>
+<script src="/static/jsc3d.js" type="text/javascript"></script>
+<div id="models"><canvas height="300" id="cv1" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv2" style="border: 1px solid;" width="400"></canvas> <canvas height="300" id="cv3" style="border: 1px solid;" width="400"></canvas> <!-- 可以添加更多的 canvas --></div>
+<div style="width: 400px; height: 70px; border: 1px solid;">Model Color:<input id="mdlClr" onchange="changeOption('ModelColor',this.value)" style="margin-right: 50px;" type="color" value="#00ff40"/> Back Color1:<input id="bckClr1" onchange="changeOption('BackgroundColor1',this.value)" style="margin-right: 50px;" type="color"/> Back Color2:<input id="bckClr2" onchange="changeOption('BackgroundColor2',this.value)" type="color"/><br/> Render Mode:<select id="render" onchange="changeOption('RenderMode',this.value)">
+<option>Flat</option>
+<option>Point</option>
+<option>Wireframe</option>
+<option>Smooth</option>
+</select>Definition:<select id="defini" onchange="changeOption('Definition',this.value)">
+<option>Standard</option>
+<option>low</option>
+<option>high</option>
+</select></div>
+<script type="text/javascript">
+var viewers = [];
+
+function getOptions(){
+    var mc = document.getElementById("mdlClr").value;
+    var bc1 = document.getElementById("bckClr1").value;
+    var bc2 = document.getElementById("bckClr2").value;
+    var ren = document.getElementById("render").value;
+    var def = document.getElementById("defini").value;
+    return {ModelColor: mc, BackgroundColor1: bc1, BackgroundColor2: bc2, RenderMode: ren, Definition: def};
+}
+
+function readSTLfile(opt, canvasId){
+    var canvas = document.getElementById(canvasId);
+    var viewer = new JSC3D.Viewer(canvas);
+    viewer.setParameter('SceneUrl', opt.SceneUrl);
+    viewer.setParameter('InitRotationX', 0);
+    viewer.setParameter('InitRotationY', 0);
+    viewer.setParameter('InitRotationZ', 0);
+    viewer.setParameter('ModelColor', opt.ModelColor);
+    viewer.setParameter('BackgroundColor1', opt.BackgroundColor1);
+    viewer.setParameter('BackgroundColor2', opt.BackgroundColor2);
+    viewer.setParameter('RenderMode', opt.RenderMode);
+    viewer.setParameter('Definition', opt.Definition);
+    viewer.init();
+    viewer.update();
+    viewers.push(viewer); // 保存 viewer 實例
+}
+
+function changeOption(strOpt,strValue){
+    console.log("change " + strOpt + " to " + strValue);
+    viewers.forEach(viewer => {
+        viewer.setParameter(strOpt, strValue);
+        viewer.init();
+        viewer.update();
+    });
+}
+
+function openByUrl(){
+    var url = document.getElementById("url").value;
+    var opt = getOptions();
+    opt.SceneUrl = url;
+    // 可以添加更多的 STL URL
+    readSTLfile(opt, 'cv1'); // 為每個 canvas 調用
+    readSTLfile(opt, 'cv2'); // 第二個 canvas
+    readSTLfile(opt, 'cv3'); // 第三個 canvas
+
+
+}
+
+function openByGet(){
+    var urls = [
+        "https://mdecad2024.github.io/hw-41223230/cmsimde/static/viewstl.html?src=https://s104.cycu.org/~41223230/PLATINERENVOIEBILLE_SLDPRT.stl", 
+        "https://mdecad2024.github.io/hw-41223230/cmsimde/static/viewstl.html?src=https://s104.cycu.org/~41223230/PLONGEURRENVOIBILLE_SLDPRT.stl",
+	"https://mdecad2024.github.io/hw-41223230/cmsimde/static/viewstl.html?src=https://s104.cycu.org/~41223230/solvespaceassemblew16.stl",
+    ];
+    var opt = getOptions();
+    urls.forEach((url, index) => {
+        opt.SceneUrl = url;
+        readSTLfile(opt, 'cv' + (index + 1)); // 動態生成 canvas ID
+    });
+}
+
+openByGet();
+</script>
+<h1>HW4</h1>
 <p>Homework 4 (20%):</p>
 <p style="padding-left: 30px;">建立 <a href="https://mde.tw/cad2024/content/Quadruped.html">Dingo 機器狗</a>控制系統設計模擬場景</p>
 <p style="padding-left: 30px;"><a href="https://github.com/mdecycu/DingoQuadruped">https://github.com/mdecycu/DingoQuadruped</a></p>
@@ -632,7 +715,13 @@ openByGet();
 <h3>w16_exam3</h3>
 <p>模擬：<a href="/downloads/simulation w16.7z">simulation w16.7z</a></p>
 <p></p>
-<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/zhrGTtaqLz4" width="560"></iframe></p><h1>Final Report</h1>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/zhrGTtaqLz4" width="560"></iframe></p>
+<p></p>
+<h1>Pinball</h1>
+<p></p>
+<p></p>
+<p></p>
+<h1>Final Report</h1>
 <p>期末口頭與書面專題報告 (30%)</p>
 <p>期末口頭專題報告影片:</p>
 <p style="padding-left: 30px;">......</p>
